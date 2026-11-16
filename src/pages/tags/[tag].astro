@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getPublishedPosts } from '../../lib/posts';
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  const tags = [...new Set(posts.flatMap(post => post.data.tags))];
+  return tags.map(tag => ({ params: { tag }, props: { tag } }));
+}
+interface Props { tag: string; }
+const { tag } = Astro.props;
+const posts = (await getPublishedPosts()).filter(post => post.data.tags.includes(tag));
+---
+<BaseLayout title={`标签：${tag}`}>
+  <section class="page-shell inner-heading"><a href="/writing/" class="back-link">← 所有文章</a><p class="section-kicker">TOPIC / 标签专题</p><h1>{tag}<span class="heading-dot">.</span></h1><p>共 {posts.length} 篇与「{tag}」有关的文字。</p></section>
+  <section class="page-shell archive-section"><div class="article-list">{posts.map((post, index) => <ArticleCard post={post} index={index}/>)}</div></section>
+</BaseLayout>

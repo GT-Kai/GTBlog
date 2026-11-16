@@ -1,0 +1,30 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublishedPosts, formatDate, postHref, tagHref, approximateReadTime } from '../../lib/posts';
+import type { BlogPost } from '../../lib/posts';
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  return posts.map(post => ({ params: { slug: post.id }, props: { post } }));
+}
+interface Props { post: BlogPost; }
+const { post } = Astro.props;
+const { Content } = await render(post);
+const posts = await getPublishedPosts();
+const related = posts.filter(item => item.id !== post.id && item.data.tags.some(tag => post.data.tags.includes(tag))).slice(0, 2);
+---
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <article class="page-shell post-shell">
+    <a class="back-link" href="/writing/">← 返回文章列表</a>
+    <header class="post-header">
+      <div class="post-meta"><span>{post.data.category}</span><span class="separator">/</span><time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time><span class="separator">/</span><span>约 {approximateReadTime(post.body)} 分钟</span></div>
+      <h1>{post.data.title}</h1>
+      <p class="post-description">{post.data.description}</p>
+      <div class="post-tags">{post.data.tags.map(tag => <a class="tag-pill" href={tagHref(tag)}># {tag}</a>)}</div>
+    </header>
+    <div class="post-divider"><span>THE STORY BEGINS</span><span aria-hidden="true">↓</span></div>
+    <div class="prose"><Content /></div>
+    <footer class="post-end"><span class="end-symbol">✳</span><p>感谢读到这里。</p><a href="/writing/">← 看看其他文章</a></footer>
+  </article>
+  {related.length > 0 && <section class="page-shell related-section"><div class="section-heading"><div><p class="section-kicker">KEEP READING</p><h2>也许你还会喜欢<span class="heading-dot">.</span></h2></div></div><div class="related-grid">{related.map(item => <a href={postHref(item)}><span>{item.data.category}</span><strong>{item.data.title}</strong><span>继续阅读 ↗</span></a>)}</div></section>}
+</BaseLayout>

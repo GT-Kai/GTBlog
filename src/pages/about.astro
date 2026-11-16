@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteConfig } from '../config';
+---
+<BaseLayout title="关于我" description="认识这个博客背后的人，以及建立这个网站的原因。">
+  <section class="page-shell inner-heading about-heading"><p class="section-kicker">ABOUT THE PERSON / 简单介绍</p><h1>你好，<em>很高兴遇见你。</em></h1><p>这里是一个小小的、自主经营的互联网角落。</p></section>
+  <section class="page-shell about-grid"><div class="about-graphic" aria-hidden="true"><div class="about-circle"><span>慢 / 慢 / 来</span></div><div class="about-graphic-label">BE CURIOUS.<br/>STAY HUMAN.</div></div><div class="about-copy"><p class="lead">我是 <strong>{siteConfig.author}</strong>。</p><p>{siteConfig.role}。在这个变化很快的世界里，我想保留一点独立思考和缓慢表达的空间。</p><p>我会在这里写下读书的收获、学习中的困难、做项目时的发现，也会记录生活里那些不必很大、却值得记住的瞬间。</p><p>这是一个持续更新的地方，而不是一份已经完成的自我介绍。</p><div class="about-info"><div><span>目前关注</span><strong>阅读 / 技术 / 写作 / 生活</strong></div><div><span>坐标</span><strong>{siteConfig.location}</strong></div><div><span>联系</span><strong>{siteConfig.email ? <a href={`mailto:${siteConfig.email}`}>{siteConfig.email} ↗</a> : '即将开放'}</strong></div></div></div></section>
+  <section class="page-shell bottom-cta"><p class="section-kicker">A SMALL INVITATION</p><h2>来都来了，<br/>不如读一篇文章再走。</h2><a class="button-outline" href="/writing/">前往文章列表 <span aria-hidden="true">↗</span></a></section>
+</BaseLayout>

@@ -1,0 +1,15 @@
+---
+import type { BlogPost } from '../lib/posts';
+import { postHref, formatDate } from '../lib/posts';
+interface Props { post: BlogPost; index?: number; }
+const { post, index } = Astro.props;
+---
+<a class="article-row" href={postHref(post)}>
+  <span class="article-index">{String((index ?? 0) + 1).padStart(2, '0')}</span>
+  <span class="article-summary">
+    <span class="article-category">{post.data.category}<span aria-hidden="true"> · </span>{formatDate(post.data.pubDate)}</span>
+    <strong>{post.data.title}</strong>
+    <span class="article-excerpt">{post.data.description}</span>
+  </span>
+  <span class="article-arrow" aria-hidden="true">↗</span>
+</a>

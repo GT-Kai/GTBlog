@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getPublishedPosts, tagHref } from '../../lib/posts';
+const posts = await getPublishedPosts();
+const tags = [...new Set(posts.flatMap(post => post.data.tags))];
+---
+<BaseLayout title="文章" description="所有文章、阅读笔记与生活随想。">
+  <section class="page-shell inner-heading">
+    <p class="section-kicker">THE ARCHIVE / 写作记录</p>
+    <h1>文字归档<span class="heading-dot">.</span></h1>
+    <p>散落的观察、问题与答案。按照时间，慢慢放在这里。</p>
+  </section>
+  <section class="page-shell archive-section">
+    <div class="archive-toolbar">
+      <span>全部文章 <strong>{posts.length}</strong></span>
+      <label class="search-box"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="article-search" placeholder="搜索文章..." type="search" aria-label="搜索文章" /></label>
+    </div>
+    <div class="tag-list"><span class="tag-prefix">标签 / </span>{tags.map(tag => <a class="tag-pill" href={tagHref(tag)}>{tag}</a>)}</div>
+    <div id="search-results" class="article-list">
+      {posts.map((post, index) => <div class="search-item" data-search={`${post.data.title} ${post.data.description} ${post.data.category} ${post.data.tags.join(' ')}`.toLowerCase()}><ArticleCard post={post} index={index}/></div>)}
+    </div>
+    <p id="search-empty" class="search-empty" hidden>没有找到匹配的文章，换个关键词试试。</p>
+  </section>
+  <script>
+    const searchInput = document.querySelector<HTMLInputElement>('#article-search');
+    const searchItems = Array.from(document.querySelectorAll<HTMLElement>('.search-item'));
+    const empty = document.querySelector<HTMLElement>('#search-empty');
+    searchInput?.addEventListener('input', () => {
+      const q = searchInput.value.trim().toLowerCase();
+      let visible = 0;
+      searchItems.forEach(el => { const match = !q || (el.dataset.search || '').includes(q); el.hidden = !match; if (match) visible++; });
+      if (empty) empty.hidden = visible > 0;
+    });
+  </script>
+</BaseLayout>
