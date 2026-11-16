@@ -3,10 +3,10 @@ export const siteConfig = {
   name: 'GT',
   englishName: 'Freakai',
   author: '怪胎',
-  role: '一个持续学习与思考的人',
-  headline: '给思想一个\n安静生长的地方。',
-  intro: '我在这里记录读过的书、做过的事，以及那些值得反复思考的问题。慢一点，也没有关系。',
-  description: 'GT是一个关于写作、阅读、技术与生活的独立个人博客。',
+  role: '一名记录技术、阅读与思考的独立写作者',
+  headline: '拆解复杂，\n构建清晰。',
+  intro: '记录技术实践、阅读笔记与长期思考。把复杂问题拆开验证，再将真正有用的部分重新连接。',
+  description: 'GT 是一个记录技术实践、阅读笔记与独立思考的个人博客。',
   email: 'lichangkai@westlake.edu.cn', // 例如 hello@yourdomain.com；留空则不显示邮箱按钮
   github: 'https://github.com/GT-Kai', // 例如 https://github.com/yourname；留空则不显示 GitHub 链接
   location: 'Internet, Somewhere',
@@ -17,8 +17,8 @@ export const projects = [
   {
     number: '01',
     category: '正在进行',
-    name: '一座数字花园',
-    description: '把散落在各处的想法，整理成可以反复走进的空间。',
+    name: '数字花园',
+    description: '把分散的知识、实验与复盘，连接成一个可持续迭代的个人知识系统。',
     accent: 'sage',
     link: '/writing/',
     linkLabel: '探索文章',
@@ -26,8 +26,8 @@ export const projects = [
   {
     number: '02',
     category: '长期计划',
-    name: '阅读与重读',
-    description: '不追求读完多少本书，更关注那些真正改变想法的句子。',
+    name: '阅读协议',
+    description: '不统计速度，只记录观点、证据与认知变化，让输入真正进入思考系统。',
     accent: 'sand',
     link: '/tags/阅读/',
     linkLabel: '阅读笔记',
